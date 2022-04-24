@@ -1,5 +1,5 @@
 # overpass-queries
-Некоторые (бес)полезные запросы к Overpass-turbo
+Некоторые (бес)полезные запросы к [Overpass-turbo](https://overpass-turbo.eu/) ([зеркало от mail.ru](https://maps.mail.ru/osm/tools/overpass/))
 
 
 ### Сёла без домов
