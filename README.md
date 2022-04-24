@@ -22,6 +22,37 @@ foreach .c -> .d (
 
 ```
 
+<details>
+<summary>Более быстрый, но менее гибкий запрос</summary>
+https://gis.stackexchange.com/questions/407903/places-near-which-there-are-no-buildings
+  
+```graphql
+area
+  ["boundary"="administrative"]
+  ["name"="Смоленская область"]
+->.b;
+
+(
+  node(area.b)
+    ["place"~"village"];
+)->.c;
+
+(
+  way[building](around.c:500)->.build; // <- !
+) -> .build;
+
+(
+  node(around.build:500)
+    ["place"~"village"];
+) -> .d;
+
+(.c; - .d;)->.result;
+
+.result out center;
+```
+
+</details>
+
 ### Висячие подъезды 
 ```graphql
 {{geocodeArea:"Центральный федеральный округ"}}->.b;
@@ -54,7 +85,7 @@ way(area.b)[waterway]["name"~"^[Рр](ека|\\.).*[^яй]$"];
 out center;
 ```
 
-### Имена рек Имена рек, требующие исправления. v4 
+### Имена рек, требующие исправления. v4 
 ```graphql
 area
   ["boundary"="administrative"]
