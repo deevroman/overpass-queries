@@ -96,4 +96,13 @@ way(area.b)[waterway]["name"~"^[Рр](е[ч]?ка|\\.|уч).*[^аяй]$"];
 
 out center;
 ```
+  
+### Фильтрация по длине значения ключа
+```graphql
+node["addr:flats"~".{150,}"];
+
+out body;
+>;
+out skel qt;
+```
 
