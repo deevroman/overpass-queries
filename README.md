@@ -254,3 +254,13 @@ out skel qt;
 ``` 
   
 </details>
+  
+### Озёра без water=lake
+```graphql
+(
+  way[name~".*ое$"][natural=water][!water]({{bbox}});
+  way[name~".*зеро.*"][natural=water][!water]({{bbox}});
+);
+(._;>;);
+out;
+```
