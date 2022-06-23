@@ -106,3 +106,10 @@ out body;
 out skel qt;
 ```
 
+  
+### Граффити без artwork_type
+```graphql
+node
+  [name~".*раффити.*"][!artwork_type][tourism=artwork];
+out;
+```
