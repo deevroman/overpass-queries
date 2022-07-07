@@ -264,3 +264,22 @@ out skel qt;
 (._;>;);
 out;
 ```
+
+### Отношения рек без связи с википедией
+```graphql
+// TODO реки с викидатой, но в отношении
+// TODO длинные без отношения
+relation[waterway=river][!wikidata]({{bbox}});
+out body;
+>;
+out skel qt;
+```
+
+### Подозрительные объекты на со словом яндекс
+```graphql
+// TODO убрать маркет, такси регулярками
+// TODO все типы
+node[~".*"~"(я|Я)ндекс"][shop!=outpost][office!=it][amenity!=vending_machine][amenity!=parcel_locker][source!="Яндекс Панорамы"][office!=company][name!="Яндекс.Маркет"];
+out;
+```
+  
