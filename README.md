@@ -53,6 +53,66 @@ area
 
 </details>
 
+  
+<details>
+<summary>Аналогичное для кладбищ</summary>
+  
+```graphql
+area
+  ["boundary"="administrative"]
+  ["name"="Воронежская область"]
+->.b;
+
+(
+  node(area.b)
+  	["place"="village"];
+)->.c;
+
+(
+  wr(area.b)["landuse"="cemetery"]->.build;
+) -> .build;
+
+(
+  node(around.build:4000)
+  	["place"="village"];
+) -> .d;
+
+(.c; - .d;)->.result;
+
+.result out center;
+```
+</details>
+
+<details>
+<summary>Аналогичное для лежачих поличейских около школ</summary>
+  
+```graphql
+area
+  ["boundary"="administrative"]
+  ["name"="Липецкая область"]
+->.b;
+
+(
+  node(area.b)
+    ["amenity"="school"];
+)->.c;
+
+(
+  way[traffic_calming](around.c:2000)->.build; // <- !
+) -> .build;
+
+(
+  node(around.build:1000)
+    ["amenity"="school"];
+) -> .d;
+
+(.c; - .d;)->.result;
+
+.result out center;
+```
+</details>
+
+  
 ### Висячие подъезды 
 ```graphql
 {{geocodeArea:"Центральный федеральный округ"}}->.b;
@@ -93,6 +153,18 @@ area
 ->.b;
 
 way(area.b)[waterway]["name"~"^[Рр](е[ч]?ка|\\.|уч).*[^аяй]$"];
+
+out center;
+```
+  
+### Имена рек, требующие исправления. v5
+```graphql
+area
+  ["boundary"="administrative"]
+  ["name"="Центральный федеральный округ"]
+->.b;
+
+way(area.b)[waterway]["name"~"^[Рр].*?\\..*$"];
 
 out center;
 ```
@@ -282,4 +354,60 @@ out skel qt;
 node[~".*"~"(я|Я)ндекс"][shop!=outpost][office!=it][amenity!=vending_machine][amenity!=parcel_locker][source!="Яндекс Панорамы"][office!=company][name!="Яндекс.Маркет"];
 out;
 ```
+
+### Попытка найти нетривиальные знаки Уступи дорогу без направления
+```graphql
+// тривиальные — на перекрёстках дорог с разным статусом. Но почему-то не всегда работает:(
+area
+  ["boundary"="administrative"]
+  ["name"="Воронежская область"]
+->.b;
+
+way[highway][!oneway](area.b)->.h;
+.h > -> .h;
+node.h["highway"="give_way"][!direction](area.b)->.c;
+
+(
+  way[highway=trunk](around.с:100);
+  way[highway=primary](around.с:100);
+  way[highway=secondary](around.с:100);
+)->.w;
+
+.w > -> .w;
+
+node.h(around.w:100)->.d;
+
+(.c; - .d;)->.res;
+
+.res out body;
+```
   
+### Для шаурмы и шашлыка на русском
+```graphql
+node[cuisine~"шаурма|шава|шашлык", i];
+out body;
+>;
+out skel qt;
+```
+  
+### Длинные ЛЭП без вольтажа
+```graphql
+{{geocodeArea::Russia}}->.a;
+(
+  way["power"="line"][!voltage](area.a)(if: length() > 100000);
+);
+out body;
+>;
+out skel qt;
+```
+  
+### Вероятно ошибочные островки безопасности
+```graphql
+area["boundary"="administrative"]["name"="Россия"]->.b;
+way["crossing:island"="yes"](area.b)(if: length() > 60);
+(._;>;);
+out;
+```
+  
+  
+### 
