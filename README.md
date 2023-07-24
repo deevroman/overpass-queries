@@ -410,4 +410,15 @@ out;
 ```
   
   
-### 
+### fixme=continue не на концах линий
+```graphql
+node[fixme=continue]({{bbox}});
+(._;<;);
+(._;>;)->.x;
+
+node.x[fixme=continue]->.a;
+node(w.x:1,-1)[fixme=continue]->.b;
+(.a; - .b;);
+
+out geom;
+```
