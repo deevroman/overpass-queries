@@ -422,3 +422,18 @@ node(w.x:1,-1)[fixme=continue]->.b;
 
 out geom;
 ```
+
+### Длинные footway=crossing + поиск в нескольких округах
+
+```graphql
+(
+  {{geocodeArea:"Северо-Западный федеральный округ"}};
+  {{geocodeArea:"Центральный федеральный округ"}};
+  {{geocodeArea:"Южный федеральный округ"}};
+  {{geocodeArea:"Северо-Кавказский федеральный округ"}};
+  {{geocodeArea:"Приволжский федеральный округ"}};
+)->.b;
+way[footway=crossing](area.b)(if: length() > 150);
+(._;>;);
+out;
+```
