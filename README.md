@@ -437,3 +437,10 @@ way[footway=crossing](area.b)(if: length() > 150);
 (._;>;);
 out;
 ```
+
+### Геометрия с слишком острыми углами
+
+```graphql
+way({{bbox}})(if:lrs_in(1,per_vertex(angle() < -175 || angle() > 175)));
+out geom;
+```
