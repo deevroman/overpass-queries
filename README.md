@@ -446,7 +446,7 @@ out geom;
 ```
 
 ### Названия улиц на точках
-```
+```graphql
 {{geocodeArea:"Russian Federation"}}->.a;
 node["name"~"улица"][highway!=bus_stop][!public_transport][highway!=platform](if: count_tags() == 1)(area.a);
 out geom;
