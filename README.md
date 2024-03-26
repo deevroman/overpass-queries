@@ -145,7 +145,7 @@ way(area.b)[waterway]["name"~"^[Рр](ека|\\.).*[^яй]$"];
 out center;
 ```
 
-### Имена рек, требующие исправления. v4 
+#### Имена рек, требующие исправления. v4 
 ```graphql
 area
   ["boundary"="administrative"]
@@ -157,7 +157,7 @@ way(area.b)[waterway]["name"~"^[Рр](е[ч]?ка|\\.|уч).*[^аяй]$"];
 out center;
 ```
   
-### Имена рек, требующие исправления. v5
+#### Имена рек, требующие исправления. v5
 ```graphql
 area
   ["boundary"="administrative"]
