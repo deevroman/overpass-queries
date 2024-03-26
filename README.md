@@ -451,3 +451,33 @@ out geom;
 node["name"~"улица"][highway!=bus_stop][!public_transport][highway!=platform](if: count_tags() == 1)(area.a);
 out geom;
 ```
+
+### Самые крайние остановки
+
+```graphql
+[timeout:250];
+{{geocodeArea:"Russian Federation"}}->.a;
+node[highway=bus_stop](area.a)->.b;
+
+node.b(if:lat() == b.min(lat())); out;
+node.b(if:lon() == b.min(lon())); out;
+node.b(if:lat() == b.max(lat())); out;
+node.b(if:lon() == b.max(lon())); out;
+```
+
+
+#### Попытка оптимизации
+
+```graphql
+[timeout:250];
+{{geocodeArea:"Россия"}}->.a;
+node[highway=bus_stop](area.a)->.b;
+
+make node ::geom = pt(b.min(lat()), b.min(lon()))->.mins;
+make node ::geom = pt(b.max(lat()), b.max(lon()))->.maxs;
+
+node.b(if:lat() == mins.min(lat())); out;
+node.b(if:lon() == mins.min(lon())); out;
+node.b(if:lat() == maxs.max(lat())); out;
+node.b(if:lon() == maxs.max(lon())); out;
+```
