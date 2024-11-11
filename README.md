@@ -481,3 +481,12 @@ node.b(if:lon() == mins.min(lon())); out;
 node.b(if:lat() == maxs.max(lat())); out;
 node.b(if:lon() == maxs.max(lon())); out;
 ```
+
+#### Поиск неправильных ролей мультиполигонов
+
+```graphql
+{{geocodeArea:RU}}->.a;
+rel[type=multipolygon][!place](if:count_by_role("outer") + count_by_role("inner") != count_members())(area.a);
+(._;>;);
+out meta;
+```
