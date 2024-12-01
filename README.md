@@ -490,3 +490,18 @@ rel[type=multipolygon][!place](if:count_by_role("outer") + count_by_role("inner"
 (._;>;);
 out meta;
 ```
+
+#### Сравнение тегов между собой
+
+```graphql
+nwr["shop_1"](if: t["shop_1"] == t["shop"]);
+out geom;
+
+{{style:
+
+node {
+  text: name;
+}
+
+}}
+```
