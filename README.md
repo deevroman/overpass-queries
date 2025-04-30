@@ -505,3 +505,26 @@ node {
 
 }}
 ```
+
+### Крупнейшие type=building
+
+По количеству участников:
+```overpassql
+rel[type=building](if:count_members() > 2000);
+(._;>>;);
+out;
+```
+
+По количеству точек:
+```overpassql
+rel[type=building]->.b;
+
+foreach .b -> .d (
+  (.d;>>;);
+  rel._(if:count(nodes) > 20000);
+  (._;>>;);
+  out;
+);
+```
+
+
