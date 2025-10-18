@@ -528,3 +528,14 @@ foreach .b -> .d (
 ```
 
 
+### route_master с чем-то кроме отношений
+
+```overpassql
+rel[route_master]->.r;
+
+foreach .r -> .member (
+  (.member;>;);
+  rel._(if:count(ways) + count(nodes) > 0);
+  out geom;
+);
+```
