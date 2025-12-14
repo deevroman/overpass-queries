@@ -539,3 +539,14 @@ foreach .r -> .member (
   out geom;
 );
 ```
+
+### Кто и в каких правках редактировал объекты с нужным тегом
+
+```overpassql
+[out:csv(all,changeset, user)];
+nwr[education=school];
+for->.i(changeset()) {
+  make stat changeset=i.set(changeset()),user=i.set(user()),all=i.count(nwr);
+  out;
+}
+```
